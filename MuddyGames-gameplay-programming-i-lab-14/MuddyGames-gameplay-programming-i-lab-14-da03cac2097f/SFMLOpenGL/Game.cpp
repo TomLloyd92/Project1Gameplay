@@ -63,19 +63,12 @@ Game::Game(sf::ContextSettings settings) :
 	settings)
 {
 
-	/*
-	game_object[0] = new GameObject();
-	game_object[0]->setPosition(vec3(0.5f, 0.5f, -10.0f));
-
-	game_object[1] = new GameObject();
-	game_object[1]->setPosition(vec3(0.8f, 0.8f, -6.0f));
-	*/
 
 	game_object[0] = new GameObject();
-	game_object[0]->setPosition(vec3(0.0f, 0.0f, 0.0f));
+	game_object[0]->setPosition(vec3(0.0f, 0.0f, -10.0f));
 
 	game_object[1] = new GameObject();
-	game_object[1]->setPosition(vec3(4.0f, 0.0f, 0.0f));
+	game_object[1]->setPosition(vec3(4.0f, 0.0f, -10.0f));
 
 }
 
@@ -447,6 +440,8 @@ void Game::render()
 	// https://www.sfml-dev.org/documentation/2.0/classsf_1_1RenderTarget.php#a8d1998464ccc54e789aaf990242b47f7
 	window.pushGLStates();
 
+	
+
 	// Find mouse position using sf::Mouse
 	int x = Mouse::getPosition(window).x;
 	int y = Mouse::getPosition(window).y;
@@ -507,7 +502,7 @@ void Game::render()
 		// VBO Data....vertices, colors and UV's appended
 		// Add the Vertices for all your GameOjects, Colors and UVS
 
-		glBufferSubData(GL_ARRAY_BUFFER, 0 * VERTICES * sizeof(GLfloat), 3 * VERTICES * sizeof(GLfloat), game_object[0]->getVertex());
+		glBufferSubData(GL_ARRAY_BUFFER, 0 * VERTICES * sizeof(GLfloat), 3 * VERTICES * sizeof(GLfloat), game_object[i]->getVertex());
 		//glBufferSubData(GL_ARRAY_BUFFER, 0 * VERTICES * sizeof(GLfloat), 3 * VERTICES * sizeof(GLfloat), vertices);
 		glBufferSubData(GL_ARRAY_BUFFER, 3 * VERTICES * sizeof(GLfloat), 4 * COLORS * sizeof(GLfloat), colors);
 		glBufferSubData(GL_ARRAY_BUFFER, ((3 * VERTICES) + (4 * COLORS)) * sizeof(GLfloat), 2 * UVS * sizeof(GLfloat), uvs);
@@ -543,8 +538,9 @@ void Game::render()
 
 		// Draw Element Arrays
 		glDrawElements(GL_TRIANGLES, 3 * INDICES, GL_UNSIGNED_INT, NULL);
-		window.display();
 	}
+	
+	window.display();
 	// Disable Arrays
 	glDisableVertexAttribArray(positionID);
 	glDisableVertexAttribArray(colorID);
