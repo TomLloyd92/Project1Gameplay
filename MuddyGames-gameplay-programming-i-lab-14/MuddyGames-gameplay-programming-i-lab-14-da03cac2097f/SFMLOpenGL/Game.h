@@ -35,7 +35,10 @@ public:
 	void run();
 private:
 
-	static const int MAX_SQUARES = 2;
+	static const int MAX_SQUARES = 4;
+
+
+	bool jump = false;
 
 	GameObject* game_object[MAX_SQUARES];
 	RenderWindow window;

@@ -41,8 +41,8 @@ unsigned char* img_data;		// image data
 
 
 
-mat4 mvp[2], projection, 
-		view, model[2];			// Model View Projection
+mat4 mvp[4], projection, 
+		view, model[4];			// Model View Projection
 
 mat4 playerCube;
 
@@ -68,7 +68,13 @@ Game::Game(sf::ContextSettings settings) :
 	game_object[0]->setPosition(vec3(0.0f, 0.0f, -10.0f));
 
 	game_object[1] = new GameObject();
-	game_object[1]->setPosition(vec3(4.0f, 0.0f, -10.0f));
+	game_object[1]->setPosition(vec3(20.0f, 0.0f, -10.0f));
+
+	game_object[2] = new GameObject();
+	game_object[2]->setPosition(vec3(40.0f, 0.0f, -10.0f));
+
+	game_object[3] = new GameObject();
+	game_object[3]->setPosition(vec3(60.0f, 0.0f, -10.0f));
 
 }
 
@@ -115,8 +121,7 @@ void Game::run()
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				model[0] = translate(model[0], glm::vec3(1, 0, 0));
-				view = translate(view, glm::vec3(-1, 0, 0));
+
 
 				// Set Model Rotation
 				if (!animate)
@@ -176,14 +181,13 @@ void Game::run()
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-				// Set Model Rotation
-				model[0] = rotate(model[0], -0.01f, glm::vec3(1, 0, 0)); // Rotate
+				model[0] = translate(model[0], glm::vec3(0, 1.0, 0));
+				
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				// Set Model Rotation
-				model[0] = rotate(model[0], 0.01f, glm::vec3(1, 0, 0)); // Rotate
+				model[0] = translate(model[0], glm::vec3(0, -1.0, 0));
 			}
 
 			if (animate)
@@ -413,6 +417,9 @@ void Game::update()
 	// Update Model View Projection
 	// For mutiple objects (cubes) create multiple models
 	// To alter Camera modify view & projection
+
+	model[0] = translate(model[0], glm::vec3(0.1, 0, 0));
+	view = translate(view, glm::vec3(-0.1, 0, 0));
 
 	
 	for (int i = 0; i < MAX_SQUARES; i++)
